@@ -819,7 +819,7 @@
       },
       "targets": [
         {
-          "expr": "100 * (clamp_min(delta(node_netstat_Tcp_RetransSegs{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0) / 300) / clamp_min((clamp_min(delta(node_netstat_Tcp_OutSegs{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0) / 300), 1e-9)",
+          "expr": "100 * clamp_min(rate(node_netstat_Tcp_RetransSegs{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0) / clamp_min(rate(node_netstat_Tcp_OutSegs{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 1e-9)",
           "legendFormat": "TCP Retransmissions (%)",
           "refId": "A"
         }
@@ -869,17 +869,17 @@
       },
       "targets": [
         {
-          "expr": "clamp_min(delta(node_netstat_TcpExt_TCPTimeouts{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0) / 300",
+          "expr": "clamp_min(rate(node_netstat_TcpExt_TCPTimeouts{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
           "legendFormat": "TCP Timeouts/s",
           "refId": "A"
         },
         {
-          "expr": "clamp_min(delta(node_netstat_TcpExt_TCPSynRetrans{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0) / 300",
+          "expr": "clamp_min(rate(node_netstat_TcpExt_TCPSynRetrans{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
           "legendFormat": "TCP SYN Retrans/s",
           "refId": "B"
         },
         {
-          "expr": "clamp_min(delta(node_netstat_TcpExt_TCPAbortOnTimeout{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0) / 300",
+          "expr": "clamp_min(rate(node_netstat_TcpExt_TCPAbortOnTimeout{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
           "legendFormat": "TCP Abort on Timeout/s",
           "refId": "C"
         }
@@ -918,17 +918,17 @@
       },
       "targets": [
         {
-          "expr": "clamp_min(delta(node_netstat_Udp_InErrors{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0) / 300",
+          "expr": "clamp_min(rate(node_netstat_Udp_InErrors{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
           "legendFormat": "UDP InErrors/s",
           "refId": "A"
         },
         {
-          "expr": "clamp_min(delta(node_netstat_Udp_RcvbufErrors{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0) / 300",
+          "expr": "clamp_min(rate(node_netstat_Udp_RcvbufErrors{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
           "legendFormat": "UDP RcvbufErrors/s",
           "refId": "B"
         },
         {
-          "expr": "clamp_min(delta(node_netstat_Udp_NoPorts{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0) / 300",
+          "expr": "clamp_min(rate(node_netstat_Udp_NoPorts{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
           "legendFormat": "UDP NoPorts/s",
           "refId": "C"
         }
@@ -969,22 +969,22 @@
       },
       "targets": [
         {
-          "expr": "clamp_min(delta(node_netstat_Tcp_OutRsts{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0) / 300",
+          "expr": "clamp_min(rate(node_netstat_Tcp_OutRsts{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
           "legendFormat": "TCP OutRsts/s",
           "refId": "A"
         },
         {
-          "expr": "clamp_min(delta(node_netstat_Tcp_AttemptFails{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0) / 300",
+          "expr": "clamp_min(rate(node_netstat_Tcp_AttemptFails{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
           "legendFormat": "TCP AttemptFails/s",
           "refId": "B"
         },
         {
-          "expr": "clamp_min(delta(node_netstat_Tcp_ActiveOpens{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0) / 300",
+          "expr": "clamp_min(rate(node_netstat_Tcp_ActiveOpens{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
           "legendFormat": "TCP ActiveOpens/s",
           "refId": "C"
         },
         {
-          "expr": "clamp_min(delta(node_netstat_Tcp_PassiveOpens{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0) / 300",
+          "expr": "clamp_min(rate(node_netstat_Tcp_PassiveOpens{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
           "legendFormat": "TCP PassiveOpens/s",
           "refId": "D"
         }
@@ -1272,27 +1272,27 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "100 * sum(irate(node_cpu_seconds_total{mode=\"system\",job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])) / clamp_min(sum(irate(node_cpu_seconds_total{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])), 1e-9)",
+          "expr": "100 * sum(rate(node_cpu_seconds_total{mode=\"system\",job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])) / clamp_min(sum(rate(node_cpu_seconds_total{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])), 1e-9)",
           "legendFormat": "Busy System"
         },
         {
           "refId": "B",
-          "expr": "100 * sum(irate(node_cpu_seconds_total{mode=\"user\",job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])) / clamp_min(sum(irate(node_cpu_seconds_total{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])), 1e-9)",
+          "expr": "100 * sum(rate(node_cpu_seconds_total{mode=\"user\",job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])) / clamp_min(sum(rate(node_cpu_seconds_total{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])), 1e-9)",
           "legendFormat": "Busy User"
         },
         {
           "refId": "C",
-          "expr": "100 * sum(irate(node_cpu_seconds_total{mode=\"iowait\",job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])) / clamp_min(sum(irate(node_cpu_seconds_total{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])), 1e-9)",
+          "expr": "100 * sum(rate(node_cpu_seconds_total{mode=\"iowait\",job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])) / clamp_min(sum(rate(node_cpu_seconds_total{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])), 1e-9)",
           "legendFormat": "Busy Iowait"
         },
         {
           "refId": "D",
-          "expr": "100 * sum(irate(node_cpu_seconds_total{mode=~\"irq|softirq\",job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])) / clamp_min(sum(irate(node_cpu_seconds_total{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])), 1e-9)",
+          "expr": "100 * sum(rate(node_cpu_seconds_total{mode=~\"irq|softirq\",job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])) / clamp_min(sum(rate(node_cpu_seconds_total{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])), 1e-9)",
           "legendFormat": "Busy IRQs"
         },
         {
           "refId": "E",
-          "expr": "100 * sum(irate(node_cpu_seconds_total{mode!~\"idle|user|system|iowait|irq|softirq\",job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])) / clamp_min(sum(irate(node_cpu_seconds_total{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])), 1e-9)",
+          "expr": "100 * sum(rate(node_cpu_seconds_total{mode!~\"idle|user|system|iowait|irq|softirq\",job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])) / clamp_min(sum(rate(node_cpu_seconds_total{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])), 1e-9)",
           "legendFormat": "Busy Other"
         }
       ],
@@ -1392,36 +1392,19 @@
   "templating": {
     "list": [
       {
-        "current": {
-          "selected": true,
-          "text": "192.168.1.1:9100",
-          "value": "192.168.1.1:9100"
-        },
+        "current": {},
         "hide": 0,
         "includeAll": false,
         "label": "Instance",
         "multi": false,
         "name": "instance",
-        "options": [
-          {
-            "selected": false,
-            "text": "192.168.0.1:9100",
-            "value": "192.168.0.1:9100"
-          },
-          {
-            "selected": true,
-            "text": "192.168.1.1:9100",
-            "value": "192.168.1.1:9100"
-          },
-          {
-            "selected": false,
-            "text": "192.168.2.1:9100",
-            "value": "192.168.2.1:9100"
-          }
-        ],
-        "query": "192.168.0.1:9100,192.168.1.1:9100,192.168.2.1:9100",
-        "type": "custom",
-        "allowCustomValue": true
+        "query": {
+          "query": "label_values(up{job=\"openwrt-monitoring\"}, instance)",
+          "refId": "PromVar_instance"
+        },
+        "refresh": 1,
+        "type": "query",
+        "allowCustomValue": false
       },
       {
         "name": "ifaces_all",

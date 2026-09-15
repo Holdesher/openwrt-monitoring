@@ -8,4 +8,4 @@
 ## Endpoint
 
 - Targets: [localhost:9090/targets](http://localhost:9090/targets)
-- Metrics: [localhost:9100/metrics](http://localhost:9100/metrics)
+- Router metrics: [192.168.1.1:9100/metrics](http://192.168.1.1:9100/metrics)
