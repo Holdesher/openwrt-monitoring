@@ -1448,8 +1448,8 @@
         "includeAll": false,
         "current": {
           "selected": true,
-          "text": "br-lan",
-          "value": "br-lan"
+          "text": "pppoe-wan",
+          "value": "pppoe-wan"
         },
         "sort": 1
       },
