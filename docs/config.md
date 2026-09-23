@@ -1,4 +1,6 @@
-# Setting
+# Config
+
+## Setting
 
 1. Укажите IP-адрес роутера в `prometheus/etc/targets/openwrt.yml`:
 
@@ -21,7 +23,16 @@ cp .env.example .env
 docker compose up -d
 ```
 
-Сервисы по умолчанию доступны только на этой машине:
+## Info
 
-- Grafana — [localhost:3000](http://localhost:3000),
-- Prometheus — [localhost:9090](http://localhost:9090).
+- Сервисы по умолчанию:
+  - Grafana — [localhost:3045](http://localhost:3045)
+  - Prometheus — [localhost:9090](http://localhost:9090)
+
+## Dashboard
+
+- Фильтр по умолчанию:
+  - Instance — `192.168.1.1:9100`
+  - Interfaces — `All`
+  - WAN — `pppoe-wan`
+  - LAN — `br-lan`

@@ -1392,7 +1392,11 @@
   "templating": {
     "list": [
       {
-        "current": {},
+        "current": {
+          "selected": true,
+          "text": "192.168.1.1:9100",
+          "value": "192.168.1.1:9100"
+        },
         "hide": 0,
         "includeAll": false,
         "label": "Instance",
@@ -1485,5 +1489,5 @@
   "timezone": "browser",
   "title": "OpenWRT Monitoring",
   "uid": "f2d33313-81e9-4e7a-a8da-bd211368fa68",
-  "version": 9
+  "version": 10
 }

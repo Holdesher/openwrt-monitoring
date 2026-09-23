@@ -2,7 +2,7 @@
 
 ## Service
 
-- Grafana: [localhost:3000](http://localhost:3000)
+- Grafana: [localhost:3045](http://localhost:3045)
 - Prometheus: [localhost:9090](http://localhost:9090)
 
 ## Endpoint

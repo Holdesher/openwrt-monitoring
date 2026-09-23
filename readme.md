@@ -3,7 +3,7 @@
 ## Docs
 
 - [Router](docs/router.md)
-- [Setting](docs/setting.md)
+- [Config](docs/config.md)
 - [Context](docs/context.md)
 
 ## Dashboard
@@ -14,5 +14,4 @@
 
 ## Materials
 
-- [OpenWRT-Docs](https://github.com/Holdesher/OpenWRT-Docs)
 - [OpenWRT-Specification](https://openwrt.org)
