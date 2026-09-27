@@ -714,12 +714,12 @@
       "targets": [
         {
           "expr": "rate(node_network_receive_bytes_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$wan_iface\"}[5m]) * 8",
-          "legendFormat": "WAN RX (bit/s)",
+          "legendFormat": "{{device}} RX (bit/s)",
           "refId": "A"
         },
         {
           "expr": "rate(node_network_transmit_bytes_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$wan_iface\"}[5m]) * 8",
-          "legendFormat": "WAN TX (bit/s)",
+          "legendFormat": "{{device}} TX (bit/s)",
           "refId": "B"
         }
       ],
@@ -757,12 +757,12 @@
       "targets": [
         {
           "expr": "rate(node_network_receive_drop_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$wan_iface\"}[5m])",
-          "legendFormat": "WAN RX Drops (pkt/s)",
+          "legendFormat": "{{device}} RX Drops (pkt/s)",
           "refId": "A"
         },
         {
           "expr": "rate(node_network_transmit_drop_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$wan_iface\"}[5m])",
-          "legendFormat": "WAN TX Drops (pkt/s)",
+          "legendFormat": "{{device}} TX Drops (pkt/s)",
           "refId": "B"
         }
       ],
@@ -1036,12 +1036,12 @@
       "targets": [
         {
           "expr": "rate(node_network_receive_bytes_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$lan_iface\"}[5m]) * 8",
-          "legendFormat": "LAN RX (bit/s)",
+          "legendFormat": "{{device}} RX (bit/s)",
           "refId": "A"
         },
         {
           "expr": "rate(node_network_transmit_bytes_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$lan_iface\"}[5m]) * 8",
-          "legendFormat": "LAN TX (bit/s)",
+          "legendFormat": "{{device}} TX (bit/s)",
           "refId": "B"
         }
       ],
@@ -1081,12 +1081,12 @@
       "targets": [
         {
           "expr": "rate(node_network_receive_drop_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$lan_iface\"}[5m])",
-          "legendFormat": "LAN RX Drops (pkt/s)",
+          "legendFormat": "{{device}} RX Drops (pkt/s)",
           "refId": "A"
         },
         {
           "expr": "rate(node_network_transmit_drop_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$lan_iface\"}[5m])",
-          "legendFormat": "LAN TX Drops (pkt/s)",
+          "legendFormat": "{{device}} TX Drops (pkt/s)",
           "refId": "B"
         }
       ],
@@ -1408,7 +1408,7 @@
         },
         "refresh": 1,
         "type": "query",
-        "allowCustomValue": false
+        "allowCustomValue": true
       },
       {
         "name": "ifaces_all",
@@ -1427,7 +1427,7 @@
         "multi": true,
         "includeAll": true,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "All",
           "value": "$__all"
         },
@@ -1448,14 +1448,15 @@
           "refId": "PromVar_wan_iface"
         },
         "refresh": 1,
-        "multi": false,
-        "includeAll": false,
+        "multi": true,
+        "includeAll": true,
         "current": {
           "selected": true,
-          "text": "pppoe-wan",
-          "value": "pppoe-wan"
+          "text": "All",
+          "value": "$__all"
         },
-        "sort": 1
+        "sort": 1,
+        "allValue": ".*"
       },
       {
         "name": "lan_iface",
@@ -1471,14 +1472,15 @@
           "refId": "PromVar_lan_iface"
         },
         "refresh": 1,
-        "multi": false,
-        "includeAll": false,
+        "multi": true,
+        "includeAll": true,
         "current": {
           "selected": true,
-          "text": "br-lan",
-          "value": "br-lan"
+          "text": "All",
+          "value": "$__all"
         },
-        "sort": 1
+        "sort": 1,
+        "allValue": ".*"
       }
     ]
   },
@@ -1489,5 +1491,5 @@
   "timezone": "browser",
   "title": "OpenWRT Monitoring",
   "uid": "f2d33313-81e9-4e7a-a8da-bd211368fa68",
-  "version": 10
+  "version": 15
 }

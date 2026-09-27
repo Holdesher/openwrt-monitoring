@@ -39,7 +39,7 @@ config prometheus-node-exporter-lua 'main'
 /etc/init.d/prometheus-node-exporter-lua restart
 ```
 
-## Checker
+## Check
 
 - Проверка доступа:
 
