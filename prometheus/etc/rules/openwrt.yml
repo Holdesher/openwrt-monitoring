@@ -1,0 +1,33 @@
+groups:
+  - name: openwrt-netstat-rates
+    interval: 30s
+    rules:
+      - record: openwrt:tcp_retransmissions_ratio:rate5m
+        expr: (100 * clamp_min(rate(node_netstat_Tcp_RetransSegs_total{job="openwrt-monitoring"}[5m]), 0) / rate(node_netstat_Tcp_OutSegs_total{job="openwrt-monitoring"}[5m])) and on(job, instance) (rate(node_netstat_Tcp_OutSegs_total{job="openwrt-monitoring"}[5m]) > 0)
+
+      - record: openwrt:tcp_timeouts:rate5m
+        expr: clamp_min(rate(node_netstat_TcpExt_TCPTimeouts_total{job="openwrt-monitoring"}[5m]), 0)
+
+      - record: openwrt:tcp_syn_retransmissions:rate5m
+        expr: clamp_min(rate(node_netstat_TcpExt_TCPSynRetrans_total{job="openwrt-monitoring"}[5m]), 0)
+
+      - record: openwrt:tcp_abort_on_timeout:rate5m
+        expr: clamp_min(rate(node_netstat_TcpExt_TCPAbortOnTimeout_total{job="openwrt-monitoring"}[5m]), 0)
+
+      - record: openwrt:udp_in_datagrams:rate5m
+        expr: clamp_min(rate(node_netstat_Udp_InDatagrams_total{job="openwrt-monitoring"}[5m]), 0)
+
+      - record: openwrt:udp_out_datagrams:rate5m
+        expr: clamp_min(rate(node_netstat_Udp_OutDatagrams_total{job="openwrt-monitoring"}[5m]), 0)
+
+      - record: openwrt:udp_in_errors:rate5m
+        expr: clamp_min(rate(node_netstat_Udp_InErrors_total{job="openwrt-monitoring"}[5m]), 0)
+
+      - record: openwrt:udp_rcvbuf_errors:rate5m
+        expr: clamp_min(rate(node_netstat_Udp_RcvbufErrors_total{job="openwrt-monitoring"}[5m]), 0)
+
+      - record: openwrt:udp_no_ports:rate5m
+        expr: clamp_min(rate(node_netstat_Udp_NoPorts_total{job="openwrt-monitoring"}[5m]), 0)
+
+      - record: openwrt:udp_in_checksum_errors:rate5m
+        expr: clamp_min(rate(node_netstat_Udp_InCsumErrors_total{job="openwrt-monitoring"}[5m]), 0)

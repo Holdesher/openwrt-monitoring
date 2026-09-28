@@ -68,9 +68,9 @@
           "refId": "A"
         }
       ],
-      "title": "Router Status",
+      "title": "Status",
       "type": "stat",
-      "description": "Shows whether the router exporter is reachable (UP) or not (DOWN). Act immediately if DOWN for more than 1-2 minutes."
+      "description": "Показывает доступность экспортера роутера.\n\n- Значение `1` — UP\n- Значение `0` — DOWN"
     },
     {
       "datasource": {
@@ -122,7 +122,20 @@
       ],
       "title": "Uptime",
       "type": "stat",
-      "description": "Shows how long the router has been running since the last reboot. Unexpectedly low uptime can indicate crashes, power issues, or manual restarts."
+      "description": "Показывает время работы роутера с момента последней перезагрузки.\n\n- Единица: days"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 11
+      },
+      "id": 15,
+      "panels": [],
+      "title": "System",
+      "type": "row"
     },
     {
       "datasource": {
@@ -180,9 +193,9 @@
           "refId": "A"
         }
       ],
-      "title": "CPU Used",
+      "title": "CPU Used [System]",
       "type": "stat",
-      "description": "Shows total CPU usage. Investigate if usage stays above 70%; treat above 90% as critical if sustained."
+      "description": "Показывает общую загрузку CPU.\n\n- Единица: %"
     },
     {
       "datasource": {
@@ -240,987 +253,13 @@
           "refId": "A"
         }
       ],
-      "title": "RAM Used",
+      "title": "RAM Used [System]",
       "type": "stat",
-      "description": "Shows memory pressure on the router. Investigate if usage stays above 75%; above 90% usually requires immediate action."
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dfjz2m1e86xogb"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "decimals": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 0,
-        "y": 4
-      },
-      "id": 6,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "values": false
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum(wifi_stations{job=\"openwrt-monitoring\",instance=\"$instance\"})",
-          "instant": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Wi-Fi Clients Total",
-      "type": "stat",
-      "description": "Shows how many Wi-Fi clients are currently connected. This is a load indicator only; use quality panels to diagnose user experience."
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dfjz2m1e86xogb"
-      },
-      "description": "Shows per-device signal, idle time, throughput, and issue score. Treat signal <= -70 dBm or long idle periods with active traffic as potential quality issues.",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Signal dBm"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "dBm"
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "red",
-                      "value": null
-                    },
-                    {
-                      "color": "orange",
-                      "value": -70
-                    },
-                    {
-                      "color": "green",
-                      "value": -65
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Idle s"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "s"
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": null
-                    },
-                    {
-                      "color": "orange",
-                      "value": 30
-                    },
-                    {
-                      "color": "red",
-                      "value": 60
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "RX kbps"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "Kbits"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "TX kbps"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "Kbits"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Total kbps"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "Kbits"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Issue Score"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "none"
-              },
-              {
-                "id": "decimals",
-                "value": 0
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": null
-                    },
-                    {
-                      "color": "orange",
-                      "value": 1
-                    },
-                    {
-                      "color": "red",
-                      "value": 2
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 18,
-        "x": 6,
-        "y": 4
-      },
-      "id": 12,
-      "options": {
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": true
-      },
-      "targets": [
-        {
-          "expr": "wifi_station_signal_dbm{job=\"openwrt-monitoring\",instance=\"$instance\"}",
-          "format": "table",
-          "instant": true,
-          "refId": "A"
-        },
-        {
-          "expr": "max by (mac, instance, job) (wifi_station_inactive_milliseconds{job=\"openwrt-monitoring\",instance=\"$instance\"}) / 1000",
-          "format": "table",
-          "instant": true,
-          "refId": "B"
-        },
-        {
-          "expr": "max by (mac, instance, job) (wifi_station_receive_kilobits_per_second{job=\"openwrt-monitoring\",instance=\"$instance\"})",
-          "format": "table",
-          "instant": true,
-          "refId": "C"
-        },
-        {
-          "expr": "max by (mac, instance, job) (wifi_station_transmit_kilobits_per_second{job=\"openwrt-monitoring\",instance=\"$instance\"})",
-          "format": "table",
-          "instant": true,
-          "refId": "D"
-        },
-        {
-          "expr": "(wifi_station_signal_dbm{job=\"openwrt-monitoring\",instance=\"$instance\"} < bool -70) + on(mac, instance, job) (max by (mac, instance, job) (wifi_station_inactive_milliseconds{job=\"openwrt-monitoring\",instance=\"$instance\"}) / 1000 > bool 60)",
-          "format": "table",
-          "instant": true,
-          "refId": "E"
-        }
-      ],
-      "title": "Connected Devices Activity",
-      "transformations": [
-        {
-          "id": "labelsToFields",
-          "options": {
-            "mode": "columns"
-          }
-        },
-        {
-          "id": "joinByField",
-          "options": {
-            "byField": "mac",
-            "mode": "inner"
-          }
-        },
-        {
-          "id": "calculateField",
-          "options": {
-            "mode": "binary",
-            "binary": {
-              "left": "Value #C",
-              "operator": "+",
-              "right": "Value #D"
-            },
-            "alias": "Total kbps",
-            "replaceFields": false
-          }
-        },
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "field": "Value #E",
-                "desc": true
-              }
-            ]
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Radio 1": true,
-              "Radio 2": true,
-              "Radio 3": true,
-              "Time": true,
-              "__name__": true,
-              "ifname 1": true,
-              "ifname 2": true,
-              "ifname 3": true,
-              "instance": true,
-              "job": true
-            },
-            "indexByName": {
-              "mac": 0,
-              "ip": 1,
-              "ipaddr": 2,
-              "hostname": 3,
-              "name": 4,
-              "ifname": 5,
-              "Value #A": 6,
-              "Value #B": 7,
-              "Value #C": 8,
-              "Value #D": 9,
-              "Total kbps": 10,
-              "Value #E": 11
-            },
-            "renameByName": {
-              "mac": "MAC",
-              "ip": "IP",
-              "ipaddr": "IP",
-              "hostname": "Hostname",
-              "name": "Hostname",
-              "ifname": "Radio",
-              "Value #A": "Signal dBm",
-              "Value #B": "Idle s",
-              "Value #C": "RX kbps",
-              "Value #D": "TX kbps",
-              "Value #E": "Issue Score"
-            }
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "id": 33,
-      "title": "Interfaces",
-      "type": "row",
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 23
-      },
-      "panels": []
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dfjz2m1e86xogb"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "bps"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 24,
-        "w": 12,
-        "h": 7
-      },
-      "id": 34,
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum by (device) (rate(node_network_receive_bytes_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$ifaces_all\"}[5m]) * 8)",
-          "legendFormat": "{{device}} RX (bit/s)",
-          "refId": "A"
-        }
-      ],
-      "title": "Inbound Traffic [Interfaces]",
-      "type": "timeseries",
-      "description": "Shows inbound traffic rate per selected interface. Investigate sustained spikes near known link limits or sudden traffic shifts from baseline."
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dfjz2m1e86xogb"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "bps"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 24,
-        "w": 12,
-        "h": 7
-      },
-      "id": 37,
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum by (device) (rate(node_network_transmit_bytes_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$ifaces_all\"}[5m]) * 8)",
-          "legendFormat": "{{device}} TX (bit/s)",
-          "refId": "A"
-        }
-      ],
-      "title": "Outbound Traffic [Interfaces]",
-      "type": "timeseries",
-      "description": "Shows outbound traffic rate per selected interface. Investigate sustained spikes near known link limits or unusual burst patterns."
-    },
-    {
-      "id": 20,
-      "title": "WAN Health",
-      "type": "row",
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 38
-      },
-      "panels": []
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dfjz2m1e86xogb"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "bps"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 39,
-        "w": 12,
-        "h": 7
-      },
-      "id": 7,
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "expr": "rate(node_network_receive_bytes_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$wan_iface\"}[5m]) * 8",
-          "legendFormat": "{{device}} RX (bit/s)",
-          "refId": "A"
-        },
-        {
-          "expr": "rate(node_network_transmit_bytes_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$wan_iface\"}[5m]) * 8",
-          "legendFormat": "{{device}} TX (bit/s)",
-          "refId": "B"
-        }
-      ],
-      "title": "Traffic [WAN]",
-      "type": "timeseries",
-      "description": "Shows WAN inbound and outbound throughput on the selected WAN interface. Use it to detect saturation, asymmetry, or sudden drops in external traffic."
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dfjz2m1e86xogb"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "pps"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 39,
-        "w": 12,
-        "h": 7
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "expr": "rate(node_network_receive_drop_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$wan_iface\"}[5m])",
-          "legendFormat": "{{device}} RX Drops (pkt/s)",
-          "refId": "A"
-        },
-        {
-          "expr": "rate(node_network_transmit_drop_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$wan_iface\"}[5m])",
-          "legendFormat": "{{device}} TX Drops (pkt/s)",
-          "refId": "B"
-        }
-      ],
-      "title": "Packet Drops [WAN]",
-      "type": "timeseries",
-      "id": 25,
-      "description": "Shows packet drops on the selected WAN interface. Drops should stay near zero; sustained growth often indicates congestion, link, or driver issues."
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dfjz2m1e86xogb"
-      },
-      "description": "Shows the share of retransmitted TCP segments. Investigate if sustained above 2%; treat sustained above 5% as critical.",
-      "fieldConfig": {
-        "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 2
-              },
-              {
-                "color": "red",
-                "value": 5
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 62,
-        "w": 12,
-        "h": 7
-      },
-      "id": 24,
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "expr": "100 * clamp_min(rate(node_netstat_Tcp_RetransSegs{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0) / clamp_min(rate(node_netstat_Tcp_OutSegs{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 1e-9)",
-          "legendFormat": "TCP Retransmissions (%)",
-          "refId": "A"
-        }
-      ],
-      "title": "TCP Retransmission Rate",
-      "type": "timeseries"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "x": 0,
-        "y": 54,
-        "w": 24,
-        "h": 1
-      },
-      "id": 30,
-      "panels": [],
-      "title": "TCP & UDP Health",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dfjz2m1e86xogb"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "ops"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 55,
-        "w": 12,
-        "h": 7
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "expr": "clamp_min(rate(node_netstat_TcpExt_TCPTimeouts{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
-          "legendFormat": "TCP Timeouts/s",
-          "refId": "A"
-        },
-        {
-          "expr": "clamp_min(rate(node_netstat_TcpExt_TCPSynRetrans{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
-          "legendFormat": "TCP SYN Retrans/s",
-          "refId": "B"
-        },
-        {
-          "expr": "clamp_min(rate(node_netstat_TcpExt_TCPAbortOnTimeout{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
-          "legendFormat": "TCP Abort on Timeout/s",
-          "refId": "C"
-        }
-      ],
-      "title": "TCP Reliability Events",
-      "type": "timeseries",
-      "id": 26,
-      "description": "Shows TCP timeout, SYN retransmit, and timeout-abort event rates. Values should usually stay near zero; sustained increases indicate transport instability."
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dfjz2m1e86xogb"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "ops"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 55,
-        "w": 12,
-        "h": 7
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "expr": "clamp_min(rate(node_netstat_Udp_InErrors{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
-          "legendFormat": "UDP InErrors/s",
-          "refId": "A"
-        },
-        {
-          "expr": "clamp_min(rate(node_netstat_Udp_RcvbufErrors{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
-          "legendFormat": "UDP RcvbufErrors/s",
-          "refId": "B"
-        },
-        {
-          "expr": "clamp_min(rate(node_netstat_Udp_NoPorts{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
-          "legendFormat": "UDP NoPorts/s",
-          "refId": "C"
-        }
-      ],
-      "title": "UDP Reliability Events",
-      "type": "timeseries",
-      "id": 27,
-      "description": "Shows UDP receive-path error rates (input, buffer, and no-port events). Sustained non-zero values indicate pressure, drops, or service/listener mismatch."
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dfjz2m1e86xogb"
-      },
-      "description": "Shows TCP reset and connection-failure context. Rising reset/failure rates over baseline indicate connection quality degradation.",
-      "fieldConfig": {
-        "defaults": {
-          "unit": "ops"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 62,
-        "w": 12,
-        "h": 7
-      },
-      "id": 31,
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "expr": "clamp_min(rate(node_netstat_Tcp_OutRsts{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
-          "legendFormat": "TCP OutRsts/s",
-          "refId": "A"
-        },
-        {
-          "expr": "clamp_min(rate(node_netstat_Tcp_AttemptFails{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
-          "legendFormat": "TCP AttemptFails/s",
-          "refId": "B"
-        },
-        {
-          "expr": "clamp_min(rate(node_netstat_Tcp_ActiveOpens{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
-          "legendFormat": "TCP ActiveOpens/s",
-          "refId": "C"
-        },
-        {
-          "expr": "clamp_min(rate(node_netstat_Tcp_PassiveOpens{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m]), 0)",
-          "legendFormat": "TCP PassiveOpens/s",
-          "refId": "D"
-        }
-      ],
-      "title": "TCP Connection Events",
-      "type": "timeseries"
-    },
-    {
-      "id": 22,
-      "title": "LAN Health",
-      "type": "row",
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 46
-      },
-      "panels": []
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dfjz2m1e86xogb"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "bps"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 47,
-        "w": 12,
-        "h": 7
-      },
-      "id": 8,
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "expr": "rate(node_network_receive_bytes_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$lan_iface\"}[5m]) * 8",
-          "legendFormat": "{{device}} RX (bit/s)",
-          "refId": "A"
-        },
-        {
-          "expr": "rate(node_network_transmit_bytes_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$lan_iface\"}[5m]) * 8",
-          "legendFormat": "{{device}} TX (bit/s)",
-          "refId": "B"
-        }
-      ],
-      "title": "Traffic [LAN]",
-      "type": "timeseries",
-      "description": "Shows LAN inbound and outbound throughput on the selected LAN interface. Use it to spot internal saturation, heavy hosts, or unexpected traffic drops."
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dfjz2m1e86xogb"
-      },
-      "description": "Shows packet drops on the selected LAN interface. Drops should stay near zero; sustained growth indicates local congestion or interface problems.",
-      "fieldConfig": {
-        "defaults": {
-          "unit": "pps"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 47,
-        "w": 12,
-        "h": 7
-      },
-      "id": 36,
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "expr": "rate(node_network_receive_drop_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$lan_iface\"}[5m])",
-          "legendFormat": "{{device}} RX Drops (pkt/s)",
-          "refId": "A"
-        },
-        {
-          "expr": "rate(node_network_transmit_drop_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$lan_iface\"}[5m])",
-          "legendFormat": "{{device}} TX Drops (pkt/s)",
-          "refId": "B"
-        }
-      ],
-      "title": "Packet Drops [LAN]",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dfjz2m1e86xogb"
-      },
-      "description": "Shows inbound packet drops across selected interfaces by device. Persistent non-zero values help localize where receive-path loss is happening.",
-      "fieldConfig": {
-        "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 0.000001
-              },
-              {
-                "color": "red",
-                "value": 0.1
-              }
-            ]
-          },
-          "unit": "pps"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 31,
-        "w": 12,
-        "h": 7
-      },
-      "id": 10,
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum by (device) (rate(node_network_receive_drop_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$ifaces_all\"}[5m]))",
-          "legendFormat": "{{device}} RX Drops (pkt/s)",
-          "refId": "A"
-        }
-      ],
-      "title": "Inbound Drops [Interfaces]",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dfjz2m1e86xogb"
-      },
-      "description": "Shows outbound packet drops across selected interfaces by device. Persistent non-zero values help localize where transmit-path loss is happening.",
-      "fieldConfig": {
-        "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 0.000001
-              },
-              {
-                "color": "red",
-                "value": 0.1
-              }
-            ]
-          },
-          "unit": "pps"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 31,
-        "w": 12,
-        "h": 7
-      },
-      "id": 38,
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum by (device) (rate(node_network_transmit_drop_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$ifaces_all\"}[5m]))",
-          "legendFormat": "{{device}} TX Drops (pkt/s)",
-          "refId": "A"
-        }
-      ],
-      "title": "Outbound Drops [Interfaces]",
-      "type": "timeseries"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 11
-      },
-      "id": 15,
-      "panels": [],
-      "title": "System",
-      "type": "row"
+      "description": "Показывает долю используемой оперативной памяти.\n\n- Единица: %"
     },
     {
       "id": 16,
-      "title": "CPU Usage",
+      "title": "CPU Modes [System]",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -1296,11 +335,11 @@
           "legendFormat": "Busy Other"
         }
       ],
-      "description": "Breaks CPU usage into user, system, iowait, IRQ, and other modes. Sustained iowait or IRQ spikes usually point to storage, network, or driver bottlenecks."
+      "description": "Показывает распределение загрузки CPU по режимам.\n\n- `user` — пользовательские процессы\n- `system` — системные процессы\n- `iowait` — ожидание операций ввода-вывода\n- `IRQ` — обработка аппаратных и программных прерываний\n- `other` — остальные режимы\n- Единица: %"
     },
     {
       "id": 19,
-      "title": "Memory Breakdown",
+      "title": "RAM Composition [System]",
       "type": "timeseries",
       "datasource": {
         "type": "prometheus",
@@ -1333,8 +372,7 @@
             "scaleDistribution": {
               "type": "linear"
             }
-          },
-          "max": 536870912
+          }
         },
         "overrides": []
       },
@@ -1381,7 +419,1133 @@
           "legendFormat": "Buffers"
         }
       ],
-      "description": "Shows memory usage components (apps, slab, cache, buffers, and more). Investigate persistent growth in one component when free memory trends down."
+      "description": "Показывает распределение используемой RAM по компонентам.\n\n- `Apps` — память приложений и процессов\n- `Buffers` — буферы ядра\n- `Cache` — файловый кэш\n- `Slab` — структуры ядра\n- `PageTables` — таблицы страниц\n- `SwapCache` — данные в кэше swap\n- Единица: bytes"
+    },
+    {
+      "id": 33,
+      "title": "Interfaces",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 23
+      },
+      "panels": []
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 24,
+        "w": 12,
+        "h": 7
+      },
+      "id": 34,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum by (device) (rate(node_network_receive_bytes_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$ifaces_all\"}[5m]) * 8)",
+          "legendFormat": "{{device}} RX (bit/s)",
+          "refId": "A"
+        }
+      ],
+      "title": "Inbound Traffic [Interfaces]",
+      "type": "timeseries",
+      "description": "Показывает скорость входящего трафика интерфейсов.\n\n- `{{device}}` — имя интерфейса из метрики\n- Единица: bit/s"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 24,
+        "w": 12,
+        "h": 7
+      },
+      "id": 37,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum by (device) (rate(node_network_transmit_bytes_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$ifaces_all\"}[5m]) * 8)",
+          "legendFormat": "{{device}} TX (bit/s)",
+          "refId": "A"
+        }
+      ],
+      "title": "Outbound Traffic [Interfaces]",
+      "type": "timeseries",
+      "description": "Показывает скорость исходящего трафика интерфейсов.\n\n- `{{device}}` — имя интерфейса из метрики\n- Единица: bit/s"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "description": "Показывает скорость потерь входящих пакетов интерфейсов.\n\n- `{{device}}` — имя интерфейса из метрики\n- Единица: pkt/s.",
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1e-06
+              },
+              {
+                "color": "red",
+                "value": 0.1
+              }
+            ]
+          },
+          "unit": "pps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 31,
+        "w": 12,
+        "h": 7
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum by (device) (rate(node_network_receive_drop_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$ifaces_all\"}[5m]))",
+          "legendFormat": "{{device}} RX Drops (pkt/s)",
+          "refId": "A"
+        }
+      ],
+      "title": "Inbound Drops [Interfaces]",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "description": "Показывает скорость потерь исходящих пакетов интерфейсов.\n\n- `{{device}}` — имя интерфейса из метрики\n- Единица: pkt/s.",
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1e-06
+              },
+              {
+                "color": "red",
+                "value": 0.1
+              }
+            ]
+          },
+          "unit": "pps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 31,
+        "w": 12,
+        "h": 7
+      },
+      "id": 38,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum by (device) (rate(node_network_transmit_drop_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$ifaces_all\"}[5m]))",
+          "legendFormat": "{{device}} TX Drops (pkt/s)",
+          "refId": "A"
+        }
+      ],
+      "title": "Outbound Drops [Interfaces]",
+      "type": "timeseries"
+    },
+    {
+      "id": 20,
+      "title": "WAN",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 38
+      },
+      "panels": []
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 39,
+        "w": 12,
+        "h": 7
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "expr": "rate(node_network_receive_bytes_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$wan_iface\"}[5m]) * 8",
+          "legendFormat": "{{device}} RX (bit/s)",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(node_network_transmit_bytes_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$wan_iface\"}[5m]) * 8",
+          "legendFormat": "{{device}} TX (bit/s)",
+          "refId": "B"
+        }
+      ],
+      "title": "Traffic [WAN]",
+      "type": "timeseries",
+      "description": "Показывает входящую и исходящую скорость выбранного WAN-интерфейса.\n\n- `{{device}}` — имя интерфейса из метрики\n- `RX` — входящий трафик\n- `TX` — исходящий трафик\n- Единица: bit/s"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "pps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 39,
+        "w": 12,
+        "h": 7
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "expr": "rate(node_network_receive_drop_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$wan_iface\"}[5m])",
+          "legendFormat": "{{device}} RX Drops (pkt/s)",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(node_network_transmit_drop_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$wan_iface\"}[5m])",
+          "legendFormat": "{{device}} TX Drops (pkt/s)",
+          "refId": "B"
+        }
+      ],
+      "title": "Packet Drops [WAN]",
+      "type": "timeseries",
+      "id": 25,
+      "description": "Показывает скорость потерь пакетов выбранного WAN-интерфейса.\n\n- `{{device}}` — имя интерфейса из метрики\n- `RX Drops` — потери входящих пакетов\n- `TX Drops` — потери исходящих пакетов\n- Единица: pkt/s"
+    },
+    {
+      "id": 22,
+      "title": "LAN",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 46
+      },
+      "panels": []
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 47,
+        "w": 12,
+        "h": 7
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "expr": "rate(node_network_receive_bytes_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$lan_iface\"}[5m]) * 8",
+          "legendFormat": "{{device}} RX (bit/s)",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(node_network_transmit_bytes_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$lan_iface\"}[5m]) * 8",
+          "legendFormat": "{{device}} TX (bit/s)",
+          "refId": "B"
+        }
+      ],
+      "title": "Traffic [LAN]",
+      "type": "timeseries",
+      "description": "Показывает входящую и исходящую скорость выбранного LAN-интерфейса.\n\n- `{{device}}` — имя интерфейса из метрики\n- `RX` — входящий трафик\n- `TX` — исходящий трафик\n- Единица: bit/s"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "description": "Показывает скорость потерь пакетов выбранного LAN-интерфейса.\n\n- `{{device}}` — имя интерфейса из метрики\n- `RX Drops` — потери входящих пакетов\n- `TX Drops` — потери исходящих пакетов\n- Единица: pkt/s.",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "pps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 47,
+        "w": 12,
+        "h": 7
+      },
+      "id": 36,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "expr": "rate(node_network_receive_drop_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$lan_iface\"}[5m])",
+          "legendFormat": "{{device}} RX Drops (pkt/s)",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(node_network_transmit_drop_total{job=\"openwrt-monitoring\",instance=\"$instance\",device=~\"$lan_iface\"}[5m])",
+          "legendFormat": "{{device}} TX Drops (pkt/s)",
+          "refId": "B"
+        }
+      ],
+      "title": "Packet Drops [LAN]",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "x": 0,
+        "y": 54,
+        "w": 24,
+        "h": 1
+      },
+      "id": 30,
+      "panels": [],
+      "title": "TCP",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "custom": {
+            "axisPlacement": "left",
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "spanNulls": false
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/TCP Retransmissions/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "left"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 2
+                    },
+                    {
+                      "color": "red",
+                      "value": 5
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 55,
+        "w": 12,
+        "h": 7
+      },
+      "id": 24,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "expr": "openwrt:tcp_retransmissions_ratio:rate5m{job=\"openwrt-monitoring\",instance=\"$instance\"}",
+          "legendFormat": "TCP Retransmissions (%)",
+          "refId": "A"
+        }
+      ],
+      "title": "Retransmission Rate [TCP]",
+      "type": "timeseries",
+      "description": "Показывает долю повторно переданных TCP-сегментов.\n\n- `TCP Retransmissions` — повторные передачи\n- Единица: %"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "description": "Показывает частоту событий, связанных с надёжностью TCP.\n\n- `TCP Timeouts` — тайм-ауты TCP\n- `TCP SYN Retrans` — повторные передачи SYN\n- `TCP Abort on Timeout` — соединения, прерванные по тайм-ауту\n- Единица: ops/s.",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ops",
+          "custom": {
+            "axisPlacement": "left",
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "spanNulls": false
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 55,
+        "w": 12,
+        "h": 7
+      },
+      "id": 26,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "expr": "openwrt:tcp_timeouts:rate5m{job=\"openwrt-monitoring\",instance=\"$instance\"}",
+          "legendFormat": "TCP Timeouts/s",
+          "refId": "A"
+        },
+        {
+          "expr": "openwrt:tcp_syn_retransmissions:rate5m{job=\"openwrt-monitoring\",instance=\"$instance\"}",
+          "legendFormat": "TCP SYN Retrans/s",
+          "refId": "B"
+        },
+        {
+          "expr": "openwrt:tcp_abort_on_timeout:rate5m{job=\"openwrt-monitoring\",instance=\"$instance\"}",
+          "legendFormat": "TCP Abort on Timeout/s",
+          "refId": "C"
+        }
+      ],
+      "title": "Reliability Events [TCP]",
+      "type": "timeseries"
+    },
+    {
+      "id": 49,
+      "title": "UDP",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 70
+      },
+      "panels": []
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ops",
+          "custom": {
+            "axisPlacement": "left",
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "spanNulls": false
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 71,
+        "w": 12,
+        "h": 7
+      },
+      "id": 50,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "expr": "openwrt:udp_in_datagrams:rate5m{job=\"openwrt-monitoring\",instance=\"$instance\"}",
+          "legendFormat": "UDP InDatagrams/s",
+          "refId": "A"
+        },
+        {
+          "expr": "openwrt:udp_out_datagrams:rate5m{job=\"openwrt-monitoring\",instance=\"$instance\"}",
+          "legendFormat": "UDP OutDatagrams/s",
+          "refId": "B"
+        }
+      ],
+      "title": "Traffic [UDP]",
+      "type": "timeseries",
+      "description": "Показывает частоту входящих и исходящих UDP-датаграмм.\n\n- `UDP InDatagrams` — входящие датаграммы\n- `UDP OutDatagrams` — исходящие датаграммы\n- Единица: ops/s"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "description": "Показывает частоту UDP-событий, связанных с ошибками и потерями.\n\n- `UDP InErrors` — ошибки входящих датаграмм\n- `UDP RcvbufErrors` — ошибки буфера приёма\n- `UDP NoPorts` — датаграммы для недоступных портов\n- `UDP Checksum Errors` — ошибки контрольной суммы\n- Единица: ops/s.",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ops",
+          "custom": {
+            "axisPlacement": "left",
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "spanNulls": false
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 71,
+        "w": 12,
+        "h": 7
+      },
+      "id": 27,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "expr": "openwrt:udp_in_errors:rate5m{job=\"openwrt-monitoring\",instance=\"$instance\"}",
+          "legendFormat": "UDP InErrors/s",
+          "refId": "A"
+        },
+        {
+          "expr": "openwrt:udp_rcvbuf_errors:rate5m{job=\"openwrt-monitoring\",instance=\"$instance\"}",
+          "legendFormat": "UDP RcvbufErrors/s",
+          "refId": "B"
+        },
+        {
+          "expr": "openwrt:udp_no_ports:rate5m{job=\"openwrt-monitoring\",instance=\"$instance\"}",
+          "legendFormat": "UDP NoPorts/s",
+          "refId": "C"
+        },
+        {
+          "expr": "openwrt:udp_in_checksum_errors:rate5m{job=\"openwrt-monitoring\",instance=\"$instance\"}",
+          "legendFormat": "UDP Checksum Errors/s",
+          "refId": "D"
+        }
+      ],
+      "title": "Errors [UDP]",
+      "type": "timeseries"
+    },
+    {
+      "id": 46,
+      "title": "Wi-Fi",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 78
+      },
+      "panels": []
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 0,
+        "y": 79
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum(wifi_stations{job=\"openwrt-monitoring\",instance=\"$instance\"})",
+          "instant": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Clients [Wi-Fi]",
+      "type": "stat",
+      "description": "Показывает количество подключённых Wi‑Fi-клиентов.\n\n- Единица: шт."
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "description": "Показывает состояние каждого подключённого Wi‑Fi-клиента.\n\n- `MAC` — MAC-адрес клиента\n- `IP` — IP-адрес клиента\n- `Hostname` — имя клиента из метрики\n- `Interface` — интерфейс точки доступа из метрики\n- `Signal` — уровень сигнала, dBm\n- `Idle` — время простоя, s\n- `RX` — скорость приёма, bit/s\n- `TX` — скорость передачи, bit/s\n- `Total` — суммарная скорость, bit/s\n- `Issue Score` — количество признаков проблем",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Signal [dBm]"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dBm"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": -70
+                    },
+                    {
+                      "color": "green",
+                      "value": -65
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Idle [s]"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 30
+                    },
+                    {
+                      "color": "red",
+                      "value": 60
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RX [bit/s]"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bps"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TX [bit/s]"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bps"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total [bit/s]"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bps"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Issue Score"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 1
+                    },
+                    {
+                      "color": "red",
+                      "value": 2
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 18,
+        "x": 6,
+        "y": 79
+      },
+      "id": 12,
+      "options": {
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "expr": "wifi_station_signal_dbm{job=\"openwrt-monitoring\",instance=\"$instance\"}",
+          "format": "table",
+          "instant": true,
+          "refId": "A"
+        },
+        {
+          "expr": "max by (mac, instance, job) (wifi_station_inactive_milliseconds{job=\"openwrt-monitoring\",instance=\"$instance\"}) / 1000",
+          "format": "table",
+          "instant": true,
+          "refId": "B"
+        },
+        {
+          "expr": "max by (mac, instance, job) (wifi_station_receive_kilobits_per_second{job=\"openwrt-monitoring\",instance=\"$instance\"}) * 1000",
+          "format": "table",
+          "instant": true,
+          "refId": "C"
+        },
+        {
+          "expr": "max by (mac, instance, job) (wifi_station_transmit_kilobits_per_second{job=\"openwrt-monitoring\",instance=\"$instance\"}) * 1000",
+          "format": "table",
+          "instant": true,
+          "refId": "D"
+        },
+        {
+          "expr": "(wifi_station_signal_dbm{job=\"openwrt-monitoring\",instance=\"$instance\"} < bool -70) + on(mac, instance, job) (max by (mac, instance, job) (wifi_station_inactive_milliseconds{job=\"openwrt-monitoring\",instance=\"$instance\"}) / 1000 > bool 60)",
+          "format": "table",
+          "instant": true,
+          "refId": "E"
+        }
+      ],
+      "title": "Client Activity [Wi-Fi]",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {
+            "mode": "columns"
+          }
+        },
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "mac",
+            "mode": "inner"
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "binary",
+            "binary": {
+              "left": "Value #C",
+              "operator": "+",
+              "right": "Value #D"
+            },
+            "alias": "Total [bit/s]",
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "Value #E",
+                "desc": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Radio 1": true,
+              "Radio 2": true,
+              "Radio 3": true,
+              "Time": true,
+              "__name__": true,
+              "ifname 1": true,
+              "ifname 2": true,
+              "ifname 3": true,
+              "instance": true,
+              "job": true
+            },
+            "indexByName": {
+              "mac": 0,
+              "ip": 1,
+              "ipaddr": 2,
+              "hostname": 3,
+              "name": 4,
+              "ifname": 5,
+              "Value #A": 6,
+              "Value #B": 7,
+              "Value #C": 8,
+              "Value #D": 9,
+              "Total [bit/s]": 10,
+              "Value #E": 11
+            },
+            "renameByName": {
+              "mac": "MAC",
+              "ip": "IP",
+              "ipaddr": "IP",
+              "hostname": "Hostname",
+              "name": "Hostname",
+              "ifname": "Interface",
+              "Value #A": "Signal [dBm]",
+              "Value #B": "Idle [s]",
+              "Value #C": "RX [bit/s]",
+              "Value #D": "TX [bit/s]",
+              "Value #E": "Issue Score"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "dBm"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 87,
+        "w": 12,
+        "h": 7
+      },
+      "id": 47,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "expr": "wifi_network_signal_dbm{job=\"openwrt-monitoring\",instance=\"$instance\"}",
+          "legendFormat": "{{device}} {{ssid}} Signal",
+          "refId": "A"
+        },
+        {
+          "expr": "wifi_network_noise_dbm{job=\"openwrt-monitoring\",instance=\"$instance\"}",
+          "legendFormat": "{{device}} {{ssid}} Noise",
+          "refId": "B"
+        }
+      ],
+      "title": "Radio Signal [Wi-Fi]",
+      "type": "timeseries",
+      "description": "Показывает уровень сигнала и шума для каждого Wi‑Fi-радио и SSID.\n\n- `{{device}}` — имя радио из метрики\n- `{{ssid}}` — SSID из метрики\n- `Signal` — уровень сигнала, dBm\n- `Noise` — уровень шума, dBm"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 87,
+        "w": 12,
+        "h": 7
+      },
+      "id": 48,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "expr": "wifi_network_bitrate{job=\"openwrt-monitoring\",instance=\"$instance\"}",
+          "legendFormat": "{{device}} {{ssid}} Bitrate",
+          "refId": "A"
+        },
+        {
+          "expr": "wifi_network_quality{job=\"openwrt-monitoring\",instance=\"$instance\"}",
+          "legendFormat": "{{device}} {{ssid}} Quality",
+          "refId": "B"
+        }
+      ],
+      "title": "Radio Quality [Wi-Fi]",
+      "type": "timeseries",
+      "description": "Показывает скорость и качество каждого Wi‑Fi-радио и SSID.\n\n- `{{device}}` — имя радио из метрики\n- `{{ssid}}` — SSID из метрики\n- `Bitrate` — битрейт, bit/s\n- `Quality` — оценка качества без единицы"
     }
   ],
   "refresh": "30s",
@@ -1491,5 +1655,5 @@
   "timezone": "browser",
   "title": "OpenWRT Monitoring",
   "uid": "f2d33313-81e9-4e7a-a8da-bd211368fa68",
-  "version": 15
+  "version": 24
 }
