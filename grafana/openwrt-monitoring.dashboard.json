@@ -1562,17 +1562,11 @@
           "value": "192.168.1.1:9100"
         },
         "hide": 0,
-        "includeAll": false,
         "label": "Instance",
-        "multi": false,
         "name": "instance",
-        "query": {
-          "query": "label_values(up{job=\"openwrt-monitoring\"}, instance)",
-          "refId": "PromVar_instance"
-        },
-        "refresh": 1,
-        "type": "query",
-        "allowCustomValue": true
+        "options": [],
+        "skipUrlSync": true,
+        "type": "textbox"
       },
       {
         "name": "ifaces_all",
