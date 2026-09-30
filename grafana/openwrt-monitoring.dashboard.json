@@ -169,7 +169,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 12,
+        "w": 6,
         "x": 0,
         "y": 12
       },
@@ -188,7 +188,7 @@
       },
       "targets": [
         {
-          "expr": "(1 - avg(rate(node_cpu_seconds_total{job=\"openwrt-monitoring\",instance=\"$instance\",mode=\"idle\"}[5m])))*100",
+          "expr": "(1 - sum(rate(node_cpu_seconds_total{job=\"openwrt-monitoring\",instance=\"$instance\",mode=\"idle\"}[5m])) / clamp_min(sum(rate(node_cpu_seconds_total{job=\"openwrt-monitoring\",instance=\"$instance\"}[5m])), 1e-9))*100",
           "instant": true,
           "refId": "A"
         }
@@ -229,7 +229,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 12,
+        "w": 6,
         "x": 12,
         "y": 12
       },
@@ -258,6 +258,117 @@
       "description": "Показывает долю используемой оперативной памяти.\n\n- Единица: %"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 12
+      },
+      "id": 51,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "expr": "max(node_hwmon_temp_celsius{job=\"openwrt-monitoring\",instance=\"$instance\"} or node_thermal_zone_temp{job=\"openwrt-monitoring\",instance=\"$instance\"})",
+          "instant": true,
+          "refId": "A"
+        }
+      ],
+      "title": "CPU Temperature [System]",
+      "type": "stat",
+      "description": "Показывает максимальную температуру, опубликованную hwmon/thermal collector. На роутерах это обычно температура CPU/SoC.\n\n- Единица: °C"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dfjz2m1e86xogb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 12
+      },
+      "id": 52,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "expr": "node_memory_MemTotal_bytes{job=\"openwrt-monitoring\",instance=\"$instance\"}",
+          "instant": true,
+          "refId": "A"
+        }
+      ],
+      "title": "RAM Total [System]",
+      "type": "stat",
+      "description": "Показывает общий объём оперативной памяти.\n\n- Единица: bytes"
+    },
+    {
       "id": 16,
       "title": "CPU Modes [System]",
       "type": "timeseries",
@@ -284,7 +395,7 @@
             "showPoints": "never",
             "spanNulls": false,
             "stacking": {
-              "mode": "none",
+              "mode": "normal",
               "group": "A"
             },
             "axisPlacement": "auto",
@@ -374,7 +485,36 @@
             }
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {"id": "byName", "options": "Apps"},
+            "properties": [{"id": "color", "value": {"mode": "fixed", "fixedColor": "#F97316"}}]
+          },
+          {
+            "matcher": {"id": "byName", "options": "PageTables"},
+            "properties": [{"id": "color", "value": {"mode": "fixed", "fixedColor": "#A855F7"}}]
+          },
+          {
+            "matcher": {"id": "byName", "options": "SwapCache"},
+            "properties": [{"id": "color", "value": {"mode": "fixed", "fixedColor": "#06B6D4"}}]
+          },
+          {
+            "matcher": {"id": "byName", "options": "Slab"},
+            "properties": [{"id": "color", "value": {"mode": "fixed", "fixedColor": "#EC4899"}}]
+          },
+          {
+            "matcher": {"id": "byName", "options": "Cache"},
+            "properties": [{"id": "color", "value": {"mode": "fixed", "fixedColor": "#FACC15"}}]
+          },
+          {
+            "matcher": {"id": "byName", "options": "Buffers"},
+            "properties": [{"id": "color", "value": {"mode": "fixed", "fixedColor": "#3B82F6"}}]
+          },
+          {
+            "matcher": {"id": "byName", "options": "Free"},
+            "properties": [{"id": "color", "value": {"mode": "fixed", "fixedColor": "#22C55E"}}]
+          }
+        ]
       },
       "options": {
         "legend": {
@@ -417,9 +557,14 @@
           "refId": "F",
           "expr": "node_memory_Buffers_bytes{job=\"openwrt-monitoring\",instance=\"$instance\"}",
           "legendFormat": "Buffers"
+        },
+        {
+          "refId": "G",
+          "expr": "node_memory_MemFree_bytes{job=\"openwrt-monitoring\",instance=\"$instance\"}",
+          "legendFormat": "Free"
         }
       ],
-      "description": "Показывает распределение используемой RAM по компонентам.\n\n- `Apps` — память приложений и процессов\n- `Buffers` — буферы ядра\n- `Cache` — файловый кэш\n- `Slab` — структуры ядра\n- `PageTables` — таблицы страниц\n- `SwapCache` — данные в кэше swap\n- Единица: bytes"
+      "description": "Показывает полный состав RAM по компонентам.\n\n- `Apps` — остаток памяти после вычета свободной памяти и перечисленных компонентов\n- `Free` — свободная память\n- `Buffers` — буферы ядра\n- `Cache` — файловый кэш\n- `Slab` — структуры ядра\n- `PageTables` — таблицы страниц\n- `SwapCache` — данные в кэше swap\n- Единица: bytes"
     },
     {
       "id": 33,
@@ -1512,7 +1657,24 @@
         "defaults": {
           "unit": "bps"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".* Quality$"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "x": 12,

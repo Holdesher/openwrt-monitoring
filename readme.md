@@ -2,15 +2,15 @@
 
 ## Docs
 
-- [Router](docs/router.md)
-- [Config](docs/config.md)
-- [Context](docs/context.md)
+- [Router](docs/router.md) - Настройка пакетов для роутера.
+- [Local](docs/local.md) - Локальная настройка вывода метрики.
+- [Context](docs/context.md) - Общий контекст.
 
 ## Dashboard
 
-- [OpenWRT-Current](grafana/openwrt-monitoring.dashboard.json)
-- [OpenWRT-Default](https://grafana.com/grafana/dashboards/11147)
-- [OpenWRT-ASUS](https://grafana.com/grafana/dashboards/18153)
+- [OpenWRT Current](grafana/openwrt-monitoring.dashboard.json)
+- [OpenWRT Default](https://grafana.com/grafana/dashboards/11147)
+- [OpenWRT ASUS](https://grafana.com/grafana/dashboards/18153)
 
 ## Materials
 

@@ -17,7 +17,7 @@ opkg update
 3. Установите пакетов `prometheus`:
 
 ```bash
-opkg install prometheus-node-exporter-lua prometheus-node-exporter-lua-nat_traffic prometheus-node-exporter-lua-netstat prometheus-node-exporter-lua-openwrt prometheus-node-exporter-lua-wifi prometheus-node-exporter-lua-wifi_stations
+opkg install prometheus-node-exporter-lua prometheus-node-exporter-lua-hwmon prometheus-node-exporter-lua-thermal prometheus-node-exporter-lua-nat_traffic prometheus-node-exporter-lua-netstat prometheus-node-exporter-lua-openwrt prometheus-node-exporter-lua-wifi prometheus-node-exporter-lua-wifi_stations
 ```
 
 4. Настройте конфигурацию:
