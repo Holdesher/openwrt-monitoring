@@ -1,4 +1,7 @@
-<h1 align="center">OpenWRT Monitoring</h1>
+<div align="center">
+	<h1>OpenWrt Monitoring</h1>
+	<p>🚨 real-time router metrics and monitoring tools</p>
+</div>
 
 ## Docs
 
@@ -8,10 +11,10 @@
 
 ## Dashboard
 
-- [OpenWRT Current](grafana/openwrt-monitoring.dashboard.json)
-- [OpenWRT Default](https://grafana.com/grafana/dashboards/11147)
-- [OpenWRT ASUS](https://grafana.com/grafana/dashboards/18153)
+- [OpenWrt Current](grafana/openwrt-monitoring.dashboard.json)
+- [OpenWrt Default](https://grafana.com/grafana/dashboards/11147)
+- [OpenWrt ASUS](https://grafana.com/grafana/dashboards/18153)
 
 ## Materials
 
-- [OpenWRT-Specification](https://openwrt.org)
+- [OpenWrt Specification](https://openwrt.org)
