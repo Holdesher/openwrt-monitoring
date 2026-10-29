@@ -26,8 +26,8 @@ docker compose up -d
 ## Info
 
 - Сервисы по умолчанию:
-  - Grafana — [localhost:3045](http://localhost:3045)
-  - Prometheus — [localhost:9090](http://localhost:9090)
+  - Grafana — [192.168.1.161:3210](http://192.168.1.161:3210)
+  - Prometheus — [192.168.1.161:9210](http://192.168.1.161:9210)
 
 ## Dashboard
 
