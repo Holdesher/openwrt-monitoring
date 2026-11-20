@@ -11,13 +11,13 @@ ssh root@192.168.1.1
 2. Обновите список пакетов:
 
 ```bash
-opkg update
+apk update
 ```
 
 3. Установите пакетов `prometheus`:
 
 ```bash
-opkg install prometheus-node-exporter-lua prometheus-node-exporter-lua-hwmon prometheus-node-exporter-lua-thermal prometheus-node-exporter-lua-nat_traffic prometheus-node-exporter-lua-netstat prometheus-node-exporter-lua-openwrt prometheus-node-exporter-lua-wifi prometheus-node-exporter-lua-wifi_stations
+apk add prometheus-node-exporter-lua prometheus-node-exporter-lua-hwmon prometheus-node-exporter-lua-thermal prometheus-node-exporter-lua-nat_traffic prometheus-node-exporter-lua-netstat prometheus-node-exporter-lua-openwrt prometheus-node-exporter-lua-wifi prometheus-node-exporter-lua-wifi_stations
 ```
 
 4. Настройте конфигурацию:
@@ -64,8 +64,8 @@ curl http://192.168.1.1:9100/metrics
 - Ошибка связанная с `uhttpd_lua`, можно исправить:
 
 ```bash
-opkg update
-opkg install uhttpd-mod-lua lua
+apk update
+apk add uhttpd-mod-lua lua
 ```
 
 ```bash

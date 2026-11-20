@@ -19,4 +19,5 @@
 
 ## Materials
 
+- [OpenWRT Docs](https://github.com/Holdesher/openwrt-docs)
 - [OpenWRT Specification](https://openwrt.org)
